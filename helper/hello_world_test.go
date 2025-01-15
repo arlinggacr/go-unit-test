@@ -9,6 +9,16 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+// Testing M
+func TestMain(m *testing.M) {
+	// Before unit test
+	fmt.Println("Before Test")
+	m.Run()
+	// after test
+	fmt.Println("After Test")
+}
+
+// Testing T
 func TestHello(t *testing.T) {
 	result := HelloWorld("ara")
 	if result != "hello data" {
