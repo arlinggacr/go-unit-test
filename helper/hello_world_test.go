@@ -10,6 +10,7 @@ import (
 )
 
 func TestTableHelloWorld(t *testing.T) {
+	// table test concept
 	tests := []struct {
 		name     string
 		request  string
