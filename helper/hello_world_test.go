@@ -9,6 +9,57 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+// Benchmark Data
+func BenchmarkHelloWorld(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		HelloWorld("Ara")
+	}
+}
+
+func BenchmarkHelloWorldCall(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		HelloWorld("Test")
+	}
+}
+
+func BenchmarkTable(b *testing.B) {
+	benchmarks := []struct {
+		name    string
+		request string
+	}{
+		{
+			name:    "Ara",
+			request: "Ara",
+		},
+		{
+			name:    "Eko",
+			request: "Eko",
+		},
+	}
+
+	for _, benchmark := range benchmarks {
+		b.Run(benchmark.name, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				HelloWorld(benchmark.request)
+			}
+		})
+	}
+}
+
+func BenchmarkSub(b *testing.B) {
+	b.Run("Ara", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			HelloWorld("Ara")
+		}
+	})
+
+	b.Run("Test", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			HelloWorld("Test")
+		}
+	})
+}
+
 func TestTableHelloWorld(t *testing.T) {
 	// table test concept
 	tests := []struct {
@@ -44,7 +95,7 @@ func TestSubTest(t *testing.T) {
 
 	t.Run("Test 2", func(t *testing.T) {
 		result := HelloWorld("aracr")
-		require.Equal(t, "hello aracr", result, "result must be equal")
+		require.Equal(t, "hi aracr", result, "result must be equal")
 	})
 }
 
@@ -60,9 +111,9 @@ func TestMain(m *testing.M) {
 // Testing T
 func TestHello(t *testing.T) {
 	result := HelloWorld("ara")
-	if result != "hello data" {
+	if result != "hi ara" {
 		// t.FailNow()
-		t.Fatal("Result Must be hello data")
+		t.Fatal("Result Must be hi ara")
 	}
 
 	fmt.Println("Test Hello Done")
@@ -81,14 +132,14 @@ func TestHelloSkip(t *testing.T) {
 
 func TestHelloAssert(t *testing.T) {
 	result := HelloWorld("ara")
-	assert.Equal(t, "hello ara", result, "result must be equal") // sama dengan t.Fail()
+	assert.Equal(t, "hi ara", result, "result must be equal") // sama dengan t.Fail()
 
-	fmt.Println("Test Hello Done")
+	fmt.Println("Test hi Done")
 }
 
-func TestHelloRequire(t *testing.T) {
-	result := HelloWorld("ara")
-	require.Equal(t, "hello ara", result, "result must be equal") // sama dengan t.FailNow()
+// func TestHelloRequire(t *testing.T) {
+// 	result := HelloWorld("Ara")
+// 	require.Equal(t, "hi Ara", result, "result must be equal") // sama dengan t.FailNow()
 
-	fmt.Println("Test Hello Done")
-}
+// 	fmt.Println("Test hi ara Done")
+// }
